@@ -54,7 +54,7 @@ with open('/home/pim/bigresults/exp/results_4.pickle', 'r') as f:
 
 flow_scores = (scores1, scores2, scores4)
 
-adaptor = mcrep.adaptor.Adaptor('multichain_exp.csv')
+adaptor = mcrep.csv_adaptor.CSV_Adaptor('multichain_exp.csv')
 #adaptor = mcrep.adaptor.Adaptor('test.csv')
 
 graph = adaptor.create_interaction_graph()
@@ -99,7 +99,7 @@ times = {}
 last_times = {}
 
 
-for line in adaptor.iterate_csv():
+for line in adaptor.iterate_blocks():
     time_str = line[-1].strip()
     pubkey1 = line[0]
     pubkey2 = line[1]

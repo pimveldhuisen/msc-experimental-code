@@ -15,7 +15,7 @@ import os.path
 
 random.seed(0)
 
-adaptor = mcrep.adaptor.Adaptor('multichain_exp.csv')
+adaptor = mcrep.csv_adaptor.CSV_Adaptor('multichain_exp.csv')
 #adaptor = mcrep.adaptor.Adaptor('test.csv')
 
 count = 0
@@ -25,7 +25,7 @@ scores = {}
 times = []
 key_times = {}
 
-for line in adaptor.iterate_csv(None):
+for line in adaptor.iterate_blocks(None):
     time_str = line[-1].strip()
     pubkey1 = line[0]
     pubkey2 = line[1]

@@ -6,19 +6,15 @@ import time
 class Adaptor:
     """
     The Adaptor class serves as a way to create networkx DiGraph objects
-    from a csv
+    from a source of blocks
     """
-
-    def __init__(self, csvfile):
-        self.csvfile = csvfile
-
 
     def create_interaction_graph(self, filter_count=None, filter_date=None):
         G = nx.DiGraph()
 
         count = {}
         
-        for interaction in self.iterate_csv(filter_date):
+        for interaction in self.iterate_blocks(filter_date):
             info = interaction[:4]
 
 
@@ -52,7 +48,7 @@ class Adaptor:
     def create_ordered_interaction_graph(self, filter_date=None):
         G = nx.DiGraph()
 
-        for interaction in self.iterate_csv(filter_date):
+        for interaction in self.iterate_blocks(filter_date):
             pubkey_requester = interaction[0]
             pubkey_responder = interaction[1]
 
@@ -75,39 +71,9 @@ class Adaptor:
 
         return G
 
-    def iterate_csv(self, filter_date=None):
-        with open(self.csvfile, 'r') as f:
-            for line in f:
-                # Format:
-                # 0: Pubkey requester
-                # 1: Pubkey responder
-                # 2: Up (data requester -> responder)
-                # 3: Down (data responder -> requester)
-                # 4: Total_Up_Requester
-                # 5: Total_Down_Requester
-                # 6: Sequence_Number_Requester
-                # 7: Previous_Hash_Requester
-                # 8: Signature_Requester
-                # 9: Hash_Responder
-                # 10: Total_Up_Responder
-                # 11: Total_Down_Responder
-                # 12: Sequence_Number_Responder
-                # 13: Previous_Hash_Responder
-                # 14: Signature_Responder
-                # 15: Hash_Responder
-                # 16: Insert_Time
 
-                if line.startswith("Public") or line.startswith("public") or line.startswith('hex('):
-                    continue
-                else:
-                    time_str = line.split(";")[-1].strip()
-                    insert_time = time.mktime(time.strptime(time_str, '"%Y-%m-%d %H:%M:%S"'))
-
-                    if filter_date != None and insert_time > filter_date:
-                        continue
-
-
-                    yield line.split(";")
+    def iterate_blocks(self, filter_date=None):
+        raise NotImplementedError
          
 
 

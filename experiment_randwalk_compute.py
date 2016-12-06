@@ -12,7 +12,7 @@ import matplotlib
 import datetime
 import pickle
 
-adaptor = mcrep.adaptor.Adaptor('multichain_exp.csv')
+adaptor = mcrep.csv_adaptor.CSV_Adaptor('multichain_exp.csv')
 
 graph = adaptor.create_interaction_graph()
 ordered_graph = adaptor.create_ordered_interaction_graph()
